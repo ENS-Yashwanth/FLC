@@ -1,4 +1,7 @@
 # PMIC
+
+FLC - PMIC, PLL, Resets, ADS7138, CLK generator and buffer
+
 MPS5475 and Texas PMIC programming scripts
 
 PLLTS12FFCFRACF Programmable Fractional PLL and 100MHz CLK programming
