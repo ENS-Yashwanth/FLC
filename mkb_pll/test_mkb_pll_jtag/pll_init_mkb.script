@@ -1,0 +1,118 @@
+# GDB Script for PLL Initialization
+
+# Define PLL Register Addresses
+set $MKB_PLL_CTRL1_ADDR = 0x26000100
+set $MKB_PLL_CTRL2_ADDR = 0x26000104
+set $MKB_PLL_CTRL3_ADDR = 0x26000108
+
+# Define Bitfield Masks and shifts
+# MKB_PLL_CTRL1
+set $PLL_LOCKED_BIT = (1 << 30)
+set $PLL_DSM_EN_BIT = (1 << 20)
+set $PLL_DAC_EN_BIT = (1 << 1)
+set $PLL_ENABLE_BIT = (1 << 0)
+
+# MKB_PLL_CTRL2
+set $REFDIV_SHIFT = 0
+set $REFDIV_MASK = 0x3F
+set $FBDIV_SHIFT = 6
+set $FBDIV_MASK = 0xFFF
+set $POSDIV0_SHIFT = 20
+set $POSDIV0_MASK = 0xF
+set $POSDIV1_SHIFT = 24
+set $POSDIV1_MASK = 0xF
+set $POSDIV2_SHIFT = 28 
+set $POSDIV2_MASK = 0xF
+
+# MKB_PLL_CTRL3
+set $FRAC_SHIFT = 0
+set $FRAC_MASK = 0xFFFFFF
+set $POSDIV3_SHIFT = 24
+set $POSDIV3_MASK = 0xF
+set $FOUTEN_SHIFT = 28
+set $FOUTEN_MASK = 0xF
+
+# PLL Power-up and Reset  Sequence
+# (Assuming power-up is handled by board-level PMIC/ power sequencing)
+# Reset / Disable PLL - Clear the PLL_ENABLE BIT to ensure PLL is off before re-configuration
+# This simualtes the 'reg_ctrl1 & ~PLL_ENABLE_BIT' operation
+set $current_ctrl1 = *(unsigned int *)$MKB_PLL_CTRL1_ADDR
+set *(unsinged int *)$MKB_PLL_CTRL1_ADDR = ($current_ctrl1 & ~$PLL_ENABLE_BIT)
+printf "MK_PLL_CTRL1_ADDR (0x%x) set to 0x%x\n", $MKB_PLL_CTRL1_ADDR, *(unsigned int *)$MKB_PLL_CTRL1_ADDR
+
+# PLL Configuration 
+set $ref_div_val = 10
+set $fb_div_int_val = 200
+set $fb_div_frac_24bit_val = 0x123456
+set $post_div_out_0_val = 4
+set $post_div_out_1_val = 8
+set $post_div_out_2_val = 16
+set $post_div_out_3_val = 32
+set $num_outputs_val = 4
+set $frac_mode_enabled = 1
+
+printf "\n Programming PLL Control Registers ....\n"
+
+# Program MKB_PLL_CTRL2 (REFDIV, FBDIV_INT, POSDIV0, POSDIV1, PODIV2)
+# Clear relevant fields first, then set new values
+set $reg_ctrl2_val = *(unsigned int *)$MKB_PLL_CTRL2_ADDR
+set $reg_ctrl2_val = ($reg_ctrl2_val & ~($REFDIV_MASK << $REFDIV_SHIFT))
+set $reg_ctrl2_val = ($reg_ctrl2_val & ~($FBDIV_MASK << $FBDIV_SHIFT))
+set $reg_ctrl2_val = ($reg_ctrl2_val & ~($POSDIV0_MASK << $POSDIV0_SHIFT))
+set $reg_ctrl2_val = ($reg_ctrl2_val & ~($POSDIV1_MASK << $POSDIV1_SHIFT))
+set $reg_ctrl2_val = ($reg_ctrl2_val & ~($POSDIV2_MASK << $POSDIV2_SHIFT))
+
+set $reg_ctrl2_val = ($reg_ctrl2_val | ($ref_div_val << $REFDIV_SHIFT))
+set $reg_ctrl2_val = ($reg_ctrl2_val | ($fb_div_int_val << $FBDIV_SHIFT))
+set $reg_ctrl2_val = ($reg_ctrl2_val | ($post_div_out_0_val << $POSDIV0_SHIFT))
+set $reg_ctrl2_val = ($reg_ctrl2_val | ($post_div_out_1_val << $POSDIV1_SHIFT))
+set $reg_ctrl2_val = ($reg_ctrl2_val | ($post_div_out_2_val << $POSDIV2_SHIFT))
+set *(unsigned int *)$MKB_PLL_CTRL2_ADDR = $reg_ctrl2_val
+printf "MKB_PLL_CTRL2_ADDR (0x%x) set to 0x%x\n", $MKB_PLL_CTRL2_ADDR, *(unsigned int *)$MKB_PLL_CTRL2_ADDR
+
+# Program MKB_PLL_CTRL3 (FRAC, POSDIV3, FOUT_EN)
+set $fouten_mask_val = (1 << $num_outputs_val) - 1
+
+set $reg_ctrl3_val = *(unsigned int *)$MKB_PLL_CTRL3_ADDR
+set $reg_ctrl3_val = ($reg_ctrl3_val & ~($FRAC_MASK << $FRAC_SHUFT))
+set $reg_ctrl3_val = ($reg_ctrl3_val & ~($POSDIV3_MASK << $POSDIV3_SHIFT))
+set $reg_ctrl3_val = ($reg_ctrl3_val & ~($FOUTEN_MASK << FOUTEN_SHIFT))
+
+set $reg_ctrl3_val = ($reg_ctrl3_val | ($fb_div_frac_24bit_val << $FRAC_SHIFT))
+set $reg_ctrl3_val = ($reg_ctrl3_val | ($fouten_mask_val << $POSDIV3_SHIFT))
+set $reg_ctrl3_val = ($reg_ctrl3_val | ($post_div_out_3_val << FOUTEN_SHIFT))
+set *(unsigned int *)$MKB_PLL_CTRL3_ADDR = $reg_ctrl3_val
+printf "MKB_PLL_CTRL3_ADDR (0x%x) set to 0x%x\n", $MKB_PLL_CTRL3_ADDR, *(unsigned int *)$MKB_PLL_CTRL3_ADDR
+
+# Program MKB_PLL_CTRL1 (Fractional mode settings)
+set $reg_ctrl1_val = *(unsigned int *)$MKB_PLL_CTRL1_ADDR
+if ($frac_mode_enabled == 1)
+	set $reg_ctrl1_val = ($reg_ctrl1_val | $PLL_DSM_EN_BIT)
+	set $reg_ctrl1_val = ($reg_ctrl1_val | $PLL_DAC_EN_BIT)
+else
+	set $reg_ctrl1_val = ($reg_ctrl1_val & ~($PLL_DSM_EN_BIT | $PLL_DAC_EN_BIT)
+end
+set *(unsigned int *)$MKB_PLL_CTRL1_ADDR = $reg_ctrl1_val
+printf "MKB_PLL_CTRL1_ADDR (0x%x) updated with fractional mode settings to 0x%x\n", $MKB_PLL_CTRL1_ADDR, *(unsigned int *)$MKB_PLL_CTRL1_ADDR
+
+# Enable PLL
+printf "\nEnabling PLL ....\n"
+set $current_ctrl1 = *(unsigned int *)$MKB_PLL_CTRL1_ADDR
+set *(unsigned int *)$MKB_PLL_CTRL1_ADDR = ($current_ctrl1 | $PLL_ENABLE_BIT)
+printf "MKB_PLL_CTRL1_ADDR (0x%x) set to 0x%x\n", $MKB_PLL_CTRL1_ADDR, *(unsigned int *)$MKB_PLL_CTRL1_ADDR
+
+# Wait for PLL Lock
+printf "\nWaiting for PLL Lock ....\n"
+set $timeout_counter = 1000000 
+while ($timeout_counter > 0)
+	set $pll_status = *(unsigned int *)$MKB_PLL_CTRL1_ADDR
+	if (($pll_status & $PLL_LOCKED_BIT) != 0)
+		printf "PLL is locked!\n"
+		brek
+	end
+	set $timeout_counter = $timeout_counter - 1
+end
+
+if ($timeout_counter == 0)
+	printf "PLL did not lock within timeout\n"
+end

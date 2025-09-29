@@ -1,0 +1,130 @@
+I'll break down the PCA9546APWT datasheet into key sections to help you understand every detail needed for your implementation.
+1. Introduction to PCA9546APWT
+
+The PCA9546A is a quad bidirectional I²C switch that enables communication between a master (Zybo) and multiple I²C devices (PMICs) by selecting which device is active on the I²C bus.
+Key Features
+
+    4-channel I²C switch controlled through an I²C command.
+    Supports standard (100 kHz), fast (400 kHz), and high-speed (1 MHz) I²C communication.
+    Low power consumption.
+    Voltage range: 1.8V to 5.5V.
+    RESET pin available to disable all channels.
+    Each channel can be independently enabled or disabled.
+
+2. Pin Configuration
+Pin	Name	Description
+1	A0	I²C Address Selection Bit 0
+2	A1	I²C Address Selection Bit 1
+3	A2	I²C Address Selection Bit 2
+4	RESET	Resets the I²C bus and disables all channels
+5	SC0	Channel 0 SCL (PMIC1 SCL)
+6	SD0	Channel 0 SDA (PMIC1 SDA)
+7	SC1	Channel 1 SCL (PMIC2 SCL)
+8	SD1	Channel 1 SDA (PMIC2 SDA)
+9	GND	Ground
+10	SC2	Channel 2 SCL (PMIC3 SCL)
+11	SD2	Channel 2 SDA (PMIC3 SDA)
+12	SC3	Channel 3 SCL (PMIC4 SCL)
+13	SD3	Channel 3 SDA (PMIC4 SDA)
+14	SDA	Main I²C Data Line (Connected to Zybo SDA)
+15	SCL	Main I²C Clock Line (Connected to Zybo SCL)
+16	VCC	Power Supply (1.8V - 5.5V)
+3. I²C Addressing
+
+The PCA9546A default I²C address is 0x70 (7-bit address).
+It can be changed based on the A0, A1, A2 pins.
+Address Selection (A0, A1, A2 Pins)
+A2	A1	A0	7-bit Address
+0	0	0	0x70
+0	0	1	0x71
+0	1	0	0x72
+0	1	1	0x73
+1	0	0	0x74
+1	0	1	0x75
+1	1	0	0x76
+1	1	1	0x77
+
+Your schematic shows A0, A1, A2 are grounded, so your MUX I²C address is 0x70.
+4. Control Register
+
+The PCA9546A is controlled by writing a single byte to select channels.
+Channel	Bit Position	Value
+PMIC1 (SC0/SD0)	Bit 0	0x01
+PMIC2 (SC1/SD1)	Bit 1	0x02
+PMIC3 (SC2/SD2)	Bit 2	0x04
+PMIC4 (SC3/SD3)	Bit 3	0x08
+
+Example:
+
+    To enable PMIC1 (SC0/SD0), write 0x01.
+    To enable PMIC2 (SC1/SD1), write 0x02.
+    To enable PMIC1 and PMIC3 together, write 0x05 (0000 0101).
+
+5. Register Operations
+Writing to Select a Channel
+
+    To communicate with a PMIC, the master (Zybo) writes 1 byte to 0x70 (MUX address).
+    This byte determines which channel is enabled.
+
+Example: Enable Channel 2 (PMIC3)
+
+uint8_t mux_addr = 0x70;
+uint8_t channel = 0x04;  // Select channel 2 (PMIC3)
+
+I2C_Write(mux_addr, &channel, 1);
+
+Reading the Active Channel
+
+To check which channels are active, read 1 byte from the MUX (0x70).
+
+Example:
+
+uint8_t status;
+I2C_Read(mux_addr, &status, 1);
+
+If status = 0x01, PMIC1 is active.
+Resetting the MUX
+
+To reset all channels:
+
+    Pull RESET pin LOW for at least 6 ns.
+    Or write 0x00 to the MUX to disable all channels.
+
+uint8_t disable = 0x00;
+I2C_Write(mux_addr, &disable, 1);
+
+6. I²C Communication Steps
+
+    Initialize I²C on Zybo.
+    Select a PMIC by writing the control byte to the MUX (0x70).
+    Perform I²C read/write to the selected PMIC.
+    Switch channels if needed.
+
+Example: Read Data from PMIC1
+
+uint8_t pmic_addr = 0x5A;
+uint8_t reg = 0x10;
+uint8_t data;
+
+// Step 1: Enable MUX Channel 0 (PMIC1)
+uint8_t channel = 0x01;
+I2C_Write(mux_addr, &channel, 1);
+
+// Step 2: Read Register 0x10 from PMIC
+I2C_Write(pmic_addr, &reg, 1);  // Select register
+I2C_Read(pmic_addr, &data, 1);  // Read data
+
+Example: Switch from PMIC1 to PMIC2
+
+uint8_t disable = 0x00;
+I2C_Write(mux_addr, &disable, 1);  // Disable all channels
+
+uint8_t channel = 0x02;  // Enable PMIC2
+I2C_Write(mux_addr, &channel, 1);
+
+7. Important Considerations
+
+✅ Channel Switching: Always disable channels (0x00) before enabling a new one.
+✅ RESET Pin: Can be pulled LOW to disable all channels.
+✅ Power Consumption: Each active channel consumes extra power.
+✅ High-Speed Mode: Works up to 1 MHz I²C speed.

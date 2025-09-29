@@ -1,0 +1,84 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/yashwanth/Documents/FLC_flc/FLC_Work_Docs/mkb_pll/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+FBDIV_MASK	pll_init_mkb.h	/^#define FBDIV_MASK /;"	d
+FBDIV_MAX_FRAC	pll_init_mkb.h	/^#define FBDIV_MAX_FRAC /;"	d
+FBDIV_MAX_INT	pll_init_mkb.h	/^#define FBDIV_MAX_INT /;"	d
+FBDIV_MIN_FRAC	pll_init_mkb.h	/^#define FBDIV_MIN_FRAC /;"	d
+FBDIV_MIN_INT	pll_init_mkb.h	/^#define FBDIV_MIN_INT /;"	d
+FBDIV_SHIFT	pll_init_mkb.h	/^#define FBDIV_SHIFT /;"	d
+FOUTEN_MASK	pll_init_mkb.h	/^#define FOUTEN_MASK /;"	d
+FOUTEN_SHIFT	pll_init_mkb.h	/^#define FOUTEN_SHIFT /;"	d
+FOUT_MAX_MHZ	pll_init_mkb.h	/^#define FOUT_MAX_MHZ /;"	d
+FOUT_MIN_MHZ	pll_init_mkb.h	/^#define FOUT_MIN_MHZ /;"	d
+FRAC_MASK	pll_init_mkb.h	/^#define FRAC_MASK /;"	d
+FRAC_SHIFT	pll_init_mkb.h	/^#define FRAC_SHIFT /;"	d
+FREF_MAX_MHZ	pll_init_mkb.h	/^#define FREF_MAX_MHZ /;"	d
+FREF_MIN_MHZ_FRAC	pll_init_mkb.h	/^#define FREF_MIN_MHZ_FRAC /;"	d
+FREF_MIN_MHZ_INT	pll_init_mkb.h	/^#define FREF_MIN_MHZ_INT /;"	d
+MKB_PLL	pll_init_mkb.h	/^#define MKB_PLL$/;"	d
+MKB_PLL_CTRL1_ADDR	pll_init_mkb.h	/^#define MKB_PLL_CTRL1_ADDR /;"	d
+MKB_PLL_CTRL2_ADDR	pll_init_mkb.h	/^#define MKB_PLL_CTRL2_ADDR /;"	d
+MKB_PLL_CTRL3_ADDR	pll_init_mkb.h	/^#define MKB_PLL_CTRL3_ADDR /;"	d
+NUM_OUTPUTS_MAN	pll_init_mkb.h	/^#define NUM_OUTPUTS_MAN /;"	d
+NUM_OUTPUTS_MIX	pll_init_mkb.h	/^#define NUM_OUTPUTS_MIX /;"	d
+PFD_FREQ_MAX_MHZ	pll_init_mkb.h	/^#define PFD_FREQ_MAX_MHZ /;"	d
+PFD_FREQ_MIN_MHZ	pll_init_mkb.h	/^#define PFD_FREQ_MIN_MHZ /;"	d
+PLL_DAC_EN_BIT	pll_init_mkb.h	/^#define PLL_DAC_EN_BIT /;"	d
+PLL_DSM_EN_BIT	pll_init_mkb.h	/^#define PLL_DSM_EN_BIT /;"	d
+PLL_ENABLE_BIT	pll_init_mkb.h	/^#define PLL_ENABLE_BIT /;"	d
+PLL_FREQ_OUT_OF_RANGE	pll_init_mkb.h	/^	PLL_FREQ_OUT_OF_RANGE,$/;"	e	enum:__anonfc669dcf0103
+PLL_INIT_SUCCESS	pll_init_mkb.h	/^	PLL_INIT_SUCCESS = 0,$/;"	e	enum:__anonfc669dcf0103
+PLL_INVALID_PARAMS	pll_init_mkb.h	/^	PLL_INVALID_PARAMS,$/;"	e	enum:__anonfc669dcf0103
+PLL_LOCKED_BIT	pll_init_mkb.h	/^#define PLL_LOCKED_BIT /;"	d
+PLL_NOT_LOCKED	pll_init_mkb.h	/^	PLL_NOT_LOCKED,$/;"	e	enum:__anonfc669dcf0103
+PLL_NO_VALID_CONFIG	pll_init_mkb.h	/^	PLL_NO_VALID_CONFIG$/;"	e	enum:__anonfc669dcf0103
+POSDIV0_MASK	pll_init_mkb.h	/^#define POSDIV0_MASK /;"	d
+POSDIV0_SHIFT	pll_init_mkb.h	/^#define POSDIV0_SHIFT /;"	d
+POSDIV1_MASK	pll_init_mkb.h	/^#define POSDIV1_MASK /;"	d
+POSDIV1_SHIFT	pll_init_mkb.h	/^#define POSDIV1_SHIFT /;"	d
+POSDIV2_MASK	pll_init_mkb.h	/^#define POSDIV2_MASK /;"	d
+POSDIV2_SHIFT	pll_init_mkb.h	/^#define POSDIV2_SHIFT /;"	d
+POSDIV3_MASK	pll_init_mkb.h	/^#define POSDIV3_MASK /;"	d
+POSDIV3_SHIFT	pll_init_mkb.h	/^#define POSDIV3_SHIFT /;"	d
+POSDIV_MAX	pll_init_mkb.h	/^#define POSDIV_MAX /;"	d
+POSDIV_MIN	pll_init_mkb.h	/^#define POSDIV_MIN /;"	d
+REFDIV_MASK	pll_init_mkb.h	/^#define REFDIV_MASK /;"	d
+REFDIV_MAX	pll_init_mkb.h	/^#define REFDIV_MAX /;"	d
+REFDIV_MIN	pll_init_mkb.h	/^#define REFDIV_MIN /;"	d
+REFDIV_SHIFT	pll_init_mkb.h	/^#define REFDIV_SHIFT /;"	d
+TEST_MKB_PLL	test_mkb_pll_freertos/test_pll_init_mkb.h	/^#define TEST_MKB_PLL$/;"	d
+VCO_FREQ_MAX_MHZ	pll_init_mkb.h	/^#define VCO_FREQ_MAX_MHZ /;"	d
+VCO_FREQ_MIN_MHZ	pll_init_mkb.h	/^#define VCO_FREQ_MIN_MHZ /;"	d
+__anonfc669dcf0103	pll_init_mkb.h	/^typedef enum {$/;"	g
+__anonfc669dcf0208	pll_init_mkb.h	/^typedef struct {$/;"	s
+check_pll_lock	pll_init_mkb.c	/^static int check_pll_lock(void) {$/;"	f	typeref:typename:int	file:
+fb_div	pll_init_mkb.h	/^	float    fb_div;         \/\/ Feedback divider for VCO (integer \/ fractional) (FBDIV[11:0]) $/;"	m	struct:__anonfc669dcf0208	typeref:typename:float
+main	pll_init_mkb.c	/^int main(void) {$/;"	f	typeref:typename:int
+main	test_mkb_pll_freertos/test_pll_init_mkb.c	/^int main(void) {$/;"	f	typeref:typename:int
+pll_config_t	pll_init_mkb.h	/^} pll_config_t;$/;"	t	typeref:struct:__anonfc669dcf0208
+pll_configuration	pll_init_mkb.c	/^static void pll_configuration(float input_ref_freq_mhz, const float desired_output_freq_mhz[], u/;"	f	typeref:typename:void	file:
+pll_edge_case_lock_high_input	test_mkb_pll_freertos/test_pll_init_mkb.c	/^void pll_edge_case_lock_high_input(void) {$/;"	f	typeref:typename:void
+pll_edge_case_lock_low_input	test_mkb_pll_freertos/test_pll_init_mkb.c	/^void pll_edge_case_lock_low_input(void) {$/;"	f	typeref:typename:void
+pll_frac_mode_lock	test_mkb_pll_freertos/test_pll_init_mkb.c	/^void pll_frac_mode_lock(void) {$/;"	f	typeref:typename:void
+pll_init_mkb	pll_init_mkb.c	/^pll_init_status_t pll_init_mkb(const float desired_output_freq_mhz[], uint32_t num_outputs, floa/;"	f	typeref:typename:pll_init_status_t
+pll_init_status_t	pll_init_mkb.h	/^} pll_init_status_t;$/;"	t	typeref:enum:__anonfc669dcf0103
+pll_invalid_config_case_vco_range_mismatch	test_mkb_pll_freertos/test_pll_init_mkb.c	/^void pll_invalid_config_case_vco_range_mismatch(void) {$/;"	f	typeref:typename:void
+pll_invalid_input_case_above_max	test_mkb_pll_freertos/test_pll_init_mkb.c	/^void pll_invalid_input_case_above_max(void) {$/;"	f	typeref:typename:void
+pll_invalid_input_case_below_min	test_mkb_pll_freertos/test_pll_init_mkb.c	/^void pll_invalid_input_case_below_min(void) {$/;"	f	typeref:typename:void
+pll_invalid_output_case_above_max	test_mkb_pll_freertos/test_pll_init_mkb.c	/^void pll_invalid_output_case_above_max(void) {$/;"	f	typeref:typename:void
+pll_invalid_output_case_below_min	test_mkb_pll_freertos/test_pll_init_mkb.c	/^void pll_invalid_output_case_below_min(void) {$/;"	f	typeref:typename:void
+pll_lock	test_mkb_pll_freertos/test_pll_init_mkb.c	/^void pll_lock(void) {$/;"	f	typeref:typename:void
+post_div_out_0	pll_init_mkb.h	/^	uint32_t post_div_out_0; \/\/ Post divider for Output - 0$/;"	m	struct:__anonfc669dcf0208	typeref:typename:uint32_t
+post_div_out_1	pll_init_mkb.h	/^	uint32_t post_div_out_1; \/\/ Post divider for Output - 1$/;"	m	struct:__anonfc669dcf0208	typeref:typename:uint32_t
+post_div_out_2	pll_init_mkb.h	/^	uint32_t post_div_out_2; \/\/ Post divider for Output - 2$/;"	m	struct:__anonfc669dcf0208	typeref:typename:uint32_t
+post_div_out_3	pll_init_mkb.h	/^	uint32_t post_div_out_3; \/\/ Post divider for Output - 3$/;"	m	struct:__anonfc669dcf0208	typeref:typename:uint32_t
+ref_div	pll_init_mkb.h	/^	uint32_t ref_div;        \/\/ Reference clock divider (REFDIV[5:0]) $/;"	m	struct:__anonfc669dcf0208	typeref:typename:uint32_t
